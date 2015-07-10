@@ -1,0 +1,12 @@
+en:
+  adv_report:
+    revenue: "Revenue"
+    units: "Units"
+    profit: "Profit"
+    count: "Order Count"
+    top_products: "Top Products"
+    top_customers: "Top Customers"
+    submit: "Submit"
+    geo_revenue: "Geo Revenue"
+    geo_units: "Geo Units"
+    geo_profit: "Geo Profit"

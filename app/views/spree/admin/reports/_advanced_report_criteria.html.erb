@@ -1,0 +1,48 @@
+<div id="advanced_report_search">
+  <%= form_for :search do |s| %>
+    <% if @stores -%>
+        Store:<br /><%= collection_select(:search, :store_id, @stores, :id, :name, { :include_blank => 'All' } ) %><br />
+        <br>
+
+    <% end -%>
+
+    <div id="taxon_products">
+    <% if @taxons -%>
+        <%=Spree.t "taxons"%>: <%= collection_select(:advanced_reporting, :taxon_id, @taxons, :id, :name, { :include_blank => 'All' } ) %>
+    <% end -%>
+    <%=Spree.t :products%>: <%= collection_select(:advanced_reporting, :product_id, @products, :id, :name, { :include_blank => 'All' } ) %><br />
+    </div>
+
+    <%= Spree.t("date_range") %>:
+    <div class="yui-g date-range-filter">
+      <div class="yui-u sub-field first" style="float:left;">
+        <label class="sub"><%= Spree.t("start") %></label>
+        <%= s.text_field :completed_at_gt , :class => 'datepicker'%>
+      </div>
+      <div class="yui-u sub-field" style="float:left;">
+        <label><%= Spree.t("stop") %></label>
+        <%= s.text_field :completed_at_lt ,  :class => 'datepicker' %>
+      </div>
+    </div>
+
+    <p><%= button Spree.t("update") %></p>
+  <% end -%>
+</div>
+
+<% content_for :head do -%>
+<%= javascript_include_tag 'admin/jquery.tablesorter.min.js', 'admin/advanced_reporting.js' %>
+<%= stylesheet_link_tag 'admin/advanced_reporting' %>
+<script type="text/javascript">
+var completed_at_lt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:completed_at_lt]) ? @report.unfiltered_params[:completed_at_lt] : '' %>";
+var completed_at_gt = "<%= (@report.unfiltered_params && @report.unfiltered_params[:completed_at_gt]) ? @report.unfiltered_params[:completed_at_gt] : '' %>";
+</script>
+<% end -%>
+
+<% if params[:advanced_reporting] -%>
+  <% if params[:advanced_reporting][:product_id] && params[:advanced_reporting][:product_id] != '' -%>
+  <input type="hidden" id="product_id" value="<%= params[:advanced_reporting][:product_id] %>" />
+  <% end -%>
+  <% if params[:advanced_reporting][:taxon_id] && params[:advanced_reporting][:taxon_id] != '' -%>
+  <input type="hidden" id="taxon_id" value="<%= params[:advanced_reporting][:taxon_id] %>" />
+  <% end -%>
+<% end -%>
